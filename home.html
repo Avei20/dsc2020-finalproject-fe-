@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid Tracker</title>
+    <link rel="stylesheet" href="headerStyle.css">
+</head>
+<style>
+    main 
+    {
+        display: none;
+    }
+    main .opening{
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        text-align: center;
+        font-size: 40px;
+        padding-top: 20px;
+    }
+
+    .box{ 
+        background-color: lightgray;
+        display: block;
+        height: 200px;
+        width:200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .totalCase p{
+        color: black;
+        text-align: center;
+        padding-top: 10px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 40px;
+    }
+
+    .details{
+        display: flex;
+        justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-top: 20px;
+    }
+
+    .boks {
+        background-color: lightgray;
+        margin: 20px;
+        width: 200px;
+        height: 200px;
+    }
+
+    .details p {
+        color: black;
+        text-align: center;
+        padding-top: 0px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 40px;
+    }
+
+    .loader{
+        border: 16px solid lightgrey;
+        border-top: 16px solid whitesmoke;
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
+    }
+
+    @keyframes spin{
+        0% {transform: rotate(0deg);}
+        100% {transform: rotate(360deg);}
+    }
+
+    .error {
+        display: none;
+        text-align: center;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+</style>
+<body>
+    
+    <header>
+        <div class="kanan">
+            <img src="./src/Untitled-1.png" alt="logoCovid">
+            <a href="./home.html" class="home">Beranda</a>
+            <a href="./dataProvinsi.html" class="dataProvinsi">Data Provinsi</a>
+        </div>
+        <div class="kiri">
+            <p>Layanan Darurat 0811 1211 2112</p>
+        </div>
+    </header>
+    <div class="loader" id="loader"></div>
+    <div class="error" id="error"></div>
+    <main id="mainInfo">
+        <div class="opening">
+            <span class="atas">Wujudkan Indonesia Sehat, Aman dan Produktif</span>
+            <br>
+            <span class="bawah"><b>INDONESIA TANGGAP COVID-19</b></span>
+        </div>
+        <div class="totalCase box">
+            <p id="totalCaseValues">10000</p>
+            <p>Total Case</p>
+        </div>
+        <div class="details">
+            <div class="postive boks">
+                <p id="positiveValues">10000</p>
+                <p>Positive</p>
+            </div>
+            <div class="recovered boks">
+                <p id="recoveredValues">10000</p>
+                <p>Recovered</p>
+            </div>
+            <div class="death boks">
+                <p id="deathValues">10000</p>
+                <p>Death</p>
+            </div>
+        </div>
+    </main>
+    <script>
+        function fetchgetDataAPI()
+        {
+            fetch(`https://indonesia-covid-19.mathdro.id/api/`, {
+                method : 'get'
+            }).then ((res) =>
+            {
+                if(res.ok)
+                {
+                    return res.json();
+                }
+                else
+                {
+                    return Promise.reject({
+                        "status" : res.status,
+                        "statusText" : res.statusText
+                    })
+                }
+            }).then ((data) =>
+            {
+                loadingPage()
+                document.getElementById('totalCaseValues').innerHTML = data.jumlahKasus
+                document.getElementById('positiveValues').innerHTML = data.perawatan
+                document.getElementById('recoveredValues').innerHTML = data.sembuh
+                document.getElementById('deathValues').innerHTML = data.meninggal
+            }).catch((error)=>
+            {
+                let errorMessage = document.createElement('h2')
+                errorMessage.innerText = `Error : ${JSON.stringify(error.status)} ${JSON.stringify(error.statusText)}`
+                document.getElementById('error').appendChild(errorMessage)
+
+                document.getElementById('loader').style.display = "none"
+                document.getElementById('mainInfo').style.display = "none"
+                document.getElementById('error').style.display = "block"
+                // console.log ("Error : " + JSON.stringify(error))
+            })  
+        }
+
+        fetchgetDataAPI()
+
+        function loadingPage()
+        {
+            document.getElementById('loader').style.display = 'none'
+            document.getElementsByTagName('main').style.display = ''
+        }
+    </script>
+</body>
+</body>
+</html>

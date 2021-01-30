@@ -1,0 +1,49 @@
+Covid Tracker 
+1 Home Page
+    > Displayu overview of Covid Statistic in Indonesia
+    > nampilin total case, Positive Case Recovered Case, Death Case
+2 Province List Page
+    > Displau the list of province list along with the number of Positive, Recovered, and Death in that Province. Also this page has a search bar to filter the province by its name
+    > detail provinsi sama ada button search nya 
+
+Ambil data nya dari: 
+api.kawalcorona.com/indonesia (Method : GET) -> Homepage
+api.kawalcorona.com/indonesia/provinsi (Method : GET) -> [Province List Page]
+
+Scoring Indication : 
+1. Beautiful UI 
+2. Not implement any third party libraries (ex : bootstrap, jquery, etc)
+3. Website should be Responsive -> tampilan harus rapih 
+4. Can load data from API & display it corrrectly
+5. Implement Live Search Feature (you can filter manually in your code, doesn't need to call API for filtering) -> search nya ga perlu nunggu di tekan enter 
+6. Show loading indicator when fetching data from API
+
+Rule : 
+Ga boleh : 
+Palgiarism 
+submit sebelum deadline
+ga boleh pake API yang lain 
+Boleh : 
+Diskusi sama temen 
+Improve UI kalian sendiri 
+dah boleh mulai workshop 
+
+Submission : 
+Private di Github
+1 Facilitator buat mendampingi project 
+kasih tau kalo udah upload ke github 
+Facilitator berhak reject kalo projectnya ga sesuai dengna ketentuan 
+nanti Facilitator bakalan kasih arahan buat codenya di perbaiki 
+kalo dah bener nanti facilitator tuh ngasih tau 
+
+Deadline : 1 bulan dari last Session 
+
+Tips : 
+jangan mepet deadline ngerjainnya 
+kalo ga tau atau binung tanya 
+ga boleh copas coding orang lain 
+banyakin searching di internet
+liat https://codebeautify.org/jsonviewer buat liat contoh JSON response from API 
+
+
+
