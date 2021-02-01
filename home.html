@@ -30,7 +30,7 @@
     .totalCase p{
         color: black;
         text-align: center;
-        padding-top: 10px;
+        padding-top: 20px;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-size: 40px;
     }
@@ -124,12 +124,17 @@
     <script>
         function fetchgetDataAPI()
         {
+<<<<<<< HEAD
+            fetch(`https://covid19.mathdro.id/api/countries/Indonesia`, {
+=======
             fetch(`https://covid19.mathdro.id/api`, {
+>>>>>>> bc9afb0492b0f0342893834eedad674c281df321
                 method : 'get'
             }).then ((res) =>
             {
                 if(res.ok)
                 {
+                    // console.log(res)
                     return res.json();
                 }
                 else
@@ -141,11 +146,13 @@
                 }
             }).then ((data) =>
             {
+                document.getElementById('totalCaseValues').innerHTML = data.confirmed.value
+                document.getElementById('positiveValues').innerHTML = data.confirmed.value
+                document.getElementById('recoveredValues').innerHTML = data.recovered.value
+                document.getElementById('deathValues').innerHTML = data.deaths.value
                 loadingPage()
-                document.getElementById('totalCaseValues').innerHTML = data.jumlahKasus
-                document.getElementById('positiveValues').innerHTML = data.perawatan
-                document.getElementById('recoveredValues').innerHTML = data.sembuh
-                document.getElementById('deathValues').innerHTML = data.meninggal
+                // console.log(data)
+                // console.log(data.confirmed.value)
             }).catch((error)=>
             {
                 let errorMessage = document.createElement('h2')
@@ -164,7 +171,8 @@
         function loadingPage()
         {
             document.getElementById('loader').style.display = 'none'
-            document.getElementsByTagName('main').style.display = ''
+            document.getElementById('mainInfo').style.display = 'block'
+            // document.getElementById('error').style.d
         }
     </script>
 </body>
