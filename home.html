@@ -124,11 +124,7 @@
     <script>
         function fetchgetDataAPI()
         {
-<<<<<<< HEAD
             fetch(`https://covid19.mathdro.id/api/countries/Indonesia`, {
-=======
-            fetch(`https://covid19.mathdro.id/api`, {
->>>>>>> bc9afb0492b0f0342893834eedad674c281df321
                 method : 'get'
             }).then ((res) =>
             {
@@ -146,7 +142,7 @@
                 }
             }).then ((data) =>
             {
-                document.getElementById('totalCaseValues').innerHTML = data.confirmed.value
+                document.getElementById('totalCaseValues').innerHTML = data.confirmed.value + data.recovered.value + data.deaths.value
                 document.getElementById('positiveValues').innerHTML = data.confirmed.value
                 document.getElementById('recoveredValues').innerHTML = data.recovered.value
                 document.getElementById('deathValues').innerHTML = data.deaths.value
