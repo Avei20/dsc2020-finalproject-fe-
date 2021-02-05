@@ -209,7 +209,7 @@
   </body>
   <script>
     function wait() {
-      unloadPage();
+      // unloadPage();
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve();
@@ -226,7 +226,7 @@
       document.getElementById("main").style.display = "none";
     }
 
-    async function loadDataToHTML(dataProv) {
+    function loadDataToHTML(dataProv) {
       for (let i = 0; i < dataProv.data.length - 1; i++) {
         inputDataToHTML(dataProv, i);
       }
@@ -306,13 +306,13 @@
     }
 
     function fetchGetDataProvinsi() {
+      unloadPage();
       fetch(`https://indonesia-covid-19.mathdro.id/api/provinsi`, {
         method: "get",
       })
-        .then(async (res) => {
-          unloadPage();
-          await wait();
-          console.log("masih di sini");
+        .then((res) => {
+          // await wait();
+          // console.log("masih di sini");
           if (res.ok) {
             return res.json();
           } else {
@@ -323,11 +323,11 @@
           }
         })
         .then((data) => {
-          localStorage.setItem("dataProv", JSON.stringify(data));
-          let dataProv = JSON.parse(localStorage.getItem("dataProv"));
-          loadDataToHTML(dataProv);
+          // localStorage.setItem("dataProv", JSON.stringify(data));
+          // let dataProv = JSON.parse(localStorage.getItem("dataProv"));
+          loadDataToHTML(data);
           loadingPage();
-          console.log("sucess");
+          // console.log("sucess");
         })
         .catch((error) => {
           let errorMessage = document.createElement("h2");
