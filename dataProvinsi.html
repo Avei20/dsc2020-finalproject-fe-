@@ -185,7 +185,7 @@
         <p>Layanan Darurat 0811 1211 2112</p>
       </div>
     </header>
-    <div id="loader"></div>
+    <div id="loader" class="loader"></div>
     <div class="error" id="error"></div>
     <main id="main">
       <div class="searchBar">
@@ -209,63 +209,28 @@
   </body>
   <script>
     function wait() {
-      loadingPage();
+      unloadPage();
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve();
-        }, 10000);
+        }, 2000);
       });
     }
-    function getDataProvinsi() {
-      var data;
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = () => {
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
-          data = JSON.parse(xhttp.responseText);
-          localStorage.setItem("dataProv", xhttp.responseText);
-          loadingPage();
-        }
-      };
-      xhttp.open("get", `https://indonesia-covid-19.mathdro.id/api/provinsi`);
-      xhttp.send();
+    function loadingPage() {
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("main").style.display = "block";
     }
 
-    // getDataProvinsi()
-
-    function fetchGetDataProvinsi() {
-      fetch(`https://indonesia-covid-19.mathdro.id/api/provinsi`, {
-        method: "get",
-      })
-        .then(async (res) => {
-          await wait();
-          if (res.ok) {
-            return res.json();
-          } else {
-            return Promise.reject({
-              status: res.status,
-              statusText: res.statusText,
-            });
-          }
-        })
-        .then((data) => {
-          localStorage.setItem("dataProv", JSON.stringify(data));
-          // loadingPage();
-        })
-        .catch((error) => {
-          let errorMessage = document.createElement("h2");
-          errorMessage.innerText = `Error : ${JSON.stringify(
-            error.status
-          )} ${JSON.stringify(error.statusText)}`;
-          document.getElementById("error").appendChild(errorMessage);
-
-          document.getElementById("loader").style.display = "none";
-          document.getElementById("main").style.display = "none";
-          document.getElementById("error").style.display = "block";
-          console.log("Error : " + JSON.stringify(error));
-        });
+    function unloadPage() {
+      document.getElementById("loader").style.display = "block";
+      document.getElementById("main").style.display = "none";
     }
 
-    fetchGetDataProvinsi();
+    async function loadDataToHTML(dataProv) {
+      for (let i = 0; i < dataProv.data.length - 1; i++) {
+        inputDataToHTML(dataProv, i);
+      }
+    }
 
     function inputDataToHTML(dataProv, index) {
       // get positive element value
@@ -340,17 +305,45 @@
       document.getElementById("listProvinsiValues").appendChild(list);
     }
 
-    let dataProv = JSON.parse(localStorage.getItem("dataProv"));
+    function fetchGetDataProvinsi() {
+      fetch(`https://indonesia-covid-19.mathdro.id/api/provinsi`, {
+        method: "get",
+      })
+        .then(async (res) => {
+          unloadPage();
+          await wait();
+          console.log("masih di sini");
+          if (res.ok) {
+            return res.json();
+          } else {
+            return Promise.reject({
+              status: res.status,
+              statusText: res.statusText,
+            });
+          }
+        })
+        .then((data) => {
+          localStorage.setItem("dataProv", JSON.stringify(data));
+          let dataProv = JSON.parse(localStorage.getItem("dataProv"));
+          loadDataToHTML(dataProv);
+          loadingPage();
+          console.log("sucess");
+        })
+        .catch((error) => {
+          let errorMessage = document.createElement("h2");
+          errorMessage.innerText = `Error : ${JSON.stringify(
+            error.status
+          )} ${JSON.stringify(error.statusText)}`;
+          document.getElementById("error").appendChild(errorMessage);
 
-    // inputDataToHTML(dataProv, 0)
-
-    function loadDataToHTML(dataProv) {
-      for (let i = 0; i < dataProv.data.length - 1; i++) {
-        inputDataToHTML(dataProv, i);
-      }
+          document.getElementById("loader").style.display = "none";
+          document.getElementById("main").style.display = "none";
+          document.getElementById("error").style.display = "block";
+          console.log("Error : " + JSON.stringify(error));
+        });
     }
 
-    loadDataToHTML(dataProv);
+    fetchGetDataProvinsi();
 
     function liveSearch() {
       var input, filter, ul, li, namaProv, i, txtValue;
@@ -378,11 +371,6 @@
       } else {
         document.getElementById("notFound").style.display = "block";
       }
-    }
-
-    function loadingPage() {
-      document.getElementById("loader").style.display = "none";
-      document.getElementById("main").style.display = "block";
     }
   </script>
 </html>
