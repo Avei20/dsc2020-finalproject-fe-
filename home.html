@@ -49,6 +49,7 @@
         margin: 20px;
         width: auto;
         height: auto;
+        min-width: 205px;
         padding-left: 10px;
         padding-right: 10px;
     }
@@ -79,13 +80,17 @@
         100% {transform: rotate(360deg);}
     }
 
+        
     .error {
         display: none;
         text-align: center;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
+    main {
+            padding-bottom: 30px;
+        }
 
-    @media only screen and (max-width: 800) {
+    @media only screen and (max-width: 300px) {
         .opening {
             flex-wrap: wrap;
             flex-direction: column;
@@ -95,6 +100,9 @@
             width: 100%;
             height: 100%;
         }
+
+        
+
     }
 </style>
 <body>

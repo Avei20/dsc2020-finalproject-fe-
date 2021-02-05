@@ -168,7 +168,10 @@
       text-align: end;
     }
 
-    @media only screen and (max-width: 320px) {
+    @media only screen and (max-width: 800px) {
+      main {
+        padding-bottom: 40px;
+      }
     }
   </style>
   <body>
@@ -206,10 +209,11 @@
   </body>
   <script>
     function wait() {
+      loadingPage();
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve();
-        }, 2000);
+        }, 10000);
       });
     }
     function getDataProvinsi() {
@@ -245,7 +249,7 @@
         })
         .then((data) => {
           localStorage.setItem("dataProv", JSON.stringify(data));
-          loadingPage();
+          // loadingPage();
         })
         .catch((error) => {
           let errorMessage = document.createElement("h2");
@@ -355,17 +359,24 @@
       ul = document.getElementById("listProvinsiValues");
       li = ul.getElementsByTagName("li");
 
+      let found = false;
+
       for (i = 0; i < li.length; i++) {
         namaProv = li[i].getElementsByTagName("h3")[0];
-        txtValue = namaProv.textContent || a.innerText;
+        txtValue = namaProv.innerText;
 
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
           li[i].style.display = "";
-          document.getElementById("notFound").style.display = "none";
-        } else {
+          found = true;
+        } else if (txtValue.toUpperCase().indexOf(filter) == -1) {
           li[i].style.display = "none";
-          document.getElementById("notFound").style.display = "block";
         }
+        console.log(`${i} = ${txtValue.toUpperCase().indexOf(filter)}`);
+      }
+      if (found) {
+        document.getElementById("notFound").style.display = "none";
+      } else {
+        document.getElementById("notFound").style.display = "block";
       }
     }
 
